@@ -3,7 +3,7 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  build-push-deploy-frontend:
+  deploy-frontend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout código
@@ -16,17 +16,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Login en Amazon ECR (manual)
-        run: |
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
-          docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_URL_FRONTEND }}
-
-      - name: Build y Push imagen Frontend
-        run: |
-          docker build -t innovatech-frontend .
-          docker tag innovatech-frontend:latest ${{ secrets.ECR_REPO_URL_FRONTEND }}:latest
-          docker push ${{ secrets.ECR_REPO_URL_FRONTEND }}:latest
 
       - name: Descargar Task Definition
         run: |

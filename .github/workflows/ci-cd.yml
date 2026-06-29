@@ -17,9 +17,11 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Forzar nuevo deploy en ECS
-        run: |
-          aws ecs update-service \
-            --cluster ${{ secrets.ECS_CLUSTER_NAME }} \
-            --service ${{ secrets.ECS_SERVICE_NAME }} \
-            --force-new-deployment
+      - name: Verificar identidad AWS
+        run: aws sts get-caller-identity
+
+      - name: Verificar clúster ECS
+        run: aws ecs list-clusters
+
+      - name: Verificar servicios ECS
+        run: aws ecs list-services --cluster ${{ secrets.ECS_CLUSTER_NAME }}

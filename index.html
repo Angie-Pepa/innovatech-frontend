@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Innovatech Chile</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f4f8; }
+    h1 { color: #2c3e50; }
+    #respuesta { margin-top: 20px; padding: 20px; background: white; border-radius: 8px; }
+    button { padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🚀 Innovatech Chile</h1>
+  <p>Sistema de Orquestación con AWS ECS</p>
+  <button onclick="consultarBackend()">Consultar Backend</button>
+  <div id="respuesta">Esperando respuesta...</div>
+  <script>
+    async function consultarBackend() {
+      try {
+        const res = await fetch('http://localhost:3000/');
+        const data = await res.json();
+        document.getElementById('respuesta').innerHTML = 
+          `<b>Mensaje:</b> ${data.mensaje} <br><b>Versión:</b> ${data.version}`;
+      } catch(e) {
+        document.getElementById('respuesta').innerHTML = 'Error conectando al backend';
+      }
+    }
+  </script>
+</body>
+</html>

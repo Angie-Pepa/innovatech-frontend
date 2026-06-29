@@ -17,12 +17,6 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Descargar Task Definition
-        run: |
-          aws ecs describe-task-definition \
-          --task-definition ${{ secrets.ECS_TASK_DEFINITION_NAME }} \
-          --query taskDefinition > task-definition.json
-
       - name: Actualizar imagen en Task Definition
         id: render-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
